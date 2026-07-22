@@ -170,7 +170,7 @@
 </head>
 <body>
 
-    <div style="width:672px;max-width:100%;margin:0 auto;box-sizing:border-box;padding:0 16px;">
+    <div class="max-w-2xl mx-auto">
 
         <!-- SECURITY CONFIGURATION -->
         <div id="securityVault" class="panel-container border-indigo-500 bg-indigo-950/10">
@@ -320,46 +320,17 @@
                         <!-- Controls -->
                         <div style="padding:16px;display:flex;flex-direction:column;gap:14px;border-bottom:1px solid rgba(255,255,255,0.05);">
 
-                            <!-- Quality + Voxel + Dither sliders row -->
-                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-                                <!-- Quality slider -->
-                                <div>
-                                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-                                        <span style="font-size:9px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.28);">Quality / Compression</span>
-                                        <span id="nimQualVal" style="font-size:13px;font-weight:bold;color:#00f2ff;">82%</span>
-                                    </div>
-                                    <input type="range" id="nimQualSlider" min="1" max="100" value="82"
-                                           style="-webkit-appearance:none;width:100%;height:3px;background:rgba(255,255,255,0.08);outline:none;cursor:pointer;border-radius:0;"
-                                           oninput="NIM.onQualSlider(this.value)">
-                                    <div style="display:flex;justify-content:space-between;font-size:8px;color:rgba(255,255,255,0.18);letter-spacing:1px;margin-top:4px;">
-                                        <span>1% — Smallest file</span><span>100% — Best quality</span>
-                                    </div>
-                                </div>
-                                <!-- Voxel Resolution slider -->
-                                <div>
-                                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-                                        <span style="font-size:9px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.28);">Voxel Resolution (Detail)</span>
-                                        <span id="nimVoxVal" style="font-size:13px;font-weight:bold;color:#e8ff47;">480px</span>
-                                    </div>
-                                    <input type="range" id="nimVoxSlider" min="100" max="1200" step="10" value="480"
-                                           style="-webkit-appearance:none;width:100%;height:3px;background:rgba(255,255,255,0.08);outline:none;cursor:pointer;border-radius:0;"
-                                           oninput="NIM.onVoxSlider(this.value)">
-                                    <div style="display:flex;justify-content:space-between;font-size:8px;color:rgba(255,255,255,0.18);letter-spacing:1px;margin-top:4px;">
-                                        <span>100px — Coarse</span><span>1200px — Fine</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Dither Error Diffusion slider (full width) -->
+                            <!-- Quality slider -->
                             <div>
                                 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-                                    <span style="font-size:9px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.28);">Dither Error Diffusion</span>
-                                    <span id="nimDithVal" style="font-size:13px;font-weight:bold;color:#e8ff47;">50%</span>
+                                    <span style="font-size:9px;font-weight:bold;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.28);">Quality / Compression</span>
+                                    <span id="nimQualVal" style="font-size:13px;font-weight:bold;color:#00f2ff;">82%</span>
                                 </div>
-                                <input type="range" id="nimDithSlider" min="0" max="100" value="50"
+                                <input type="range" id="nimQualSlider" min="1" max="100" value="82"
                                        style="-webkit-appearance:none;width:100%;height:3px;background:rgba(255,255,255,0.08);outline:none;cursor:pointer;border-radius:0;"
-                                       oninput="NIM.onDithSlider(this.value)">
+                                       oninput="NIM.onQualSlider(this.value)">
                                 <div style="display:flex;justify-content:space-between;font-size:8px;color:rgba(255,255,255,0.18);letter-spacing:1px;margin-top:4px;">
-                                    <span>0% — No dither</span><span>100% — Full Floyd-Steinberg</span>
+                                    <span>1% — Smallest file</span><span>100% — Best quality</span>
                                 </div>
                             </div>
 
@@ -386,12 +357,17 @@
 
                         </div>
 
-                        <!-- Action bar — no manual compress, sliders drive live processing -->
+                        <!-- Action buttons -->
                         <div style="padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
                             <div id="nimMinHint" style="font-size:9px;color:rgba(255,255,255,0.22);letter-spacing:.5px;"></div>
-                            <button id="nimUseBtn" onclick="NIM.useImage()" disabled style="padding:9px 20px;font-size:10px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;background:rgba(0,242,255,0.08);color:#00f2ff;border:1px solid rgba(0,242,255,0.3);cursor:not-allowed;opacity:.4;transition:all .2s;">
-                                ✓ Use as Payload
-                            </button>
+                            <div style="display:flex;gap:8px;">
+                                <button onclick="NIM.compress()" style="padding:9px 20px;font-size:10px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;background:rgba(0,255,65,0.08);color:#00ff41;border:1px solid #00ff41;cursor:pointer;transition:all .2s;" onmouseover="this.style.background='#00ff41';this.style.color='#000'" onmouseout="this.style.background='rgba(0,255,65,0.08)';this.style.color='#00ff41'">
+                                    ⚡ Compress
+                                </button>
+                                <button id="nimUseBtn" onclick="NIM.useImage()" disabled style="padding:9px 20px;font-size:10px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;background:rgba(0,242,255,0.08);color:#00f2ff;border:1px solid rgba(0,242,255,0.3);cursor:not-allowed;opacity:.4;transition:all .2s;">
+                                    ✓ Use as Payload
+                                </button>
+                            </div>
                         </div>
 
                     </div><!-- /nimEngine -->
@@ -422,26 +398,6 @@
                               rows="1"></textarea>
                 </div>
 
-                <!-- VOXEL IMAGE PAYLOAD HEX — 1440 chars -->
-                <div class="mt-3">
-                    <label class="block text-[10px] text-zinc-500 uppercase font-bold mb-2">
-                        Image Payload Hex
-                        <span class="text-zinc-700 normal-case font-normal">(1440 chars · voxel-encoded · zero-padded)</span>
-                    </label>
-                    <div class="flex items-start gap-2">
-                        <textarea id="voxelPayloadHex" readonly
-                                  placeholder="Load & process an image above to generate voxel payload…"
-                                  class="flex-1 bg-black border border-zinc-800 rounded p-3 text-[10px] text-yellow-400 outline-none resize-none font-mono tracking-widest"
-                                  style="min-height:56px;word-break:break-all;white-space:pre-wrap;"
-                                  rows="3"></textarea>
-                        <button id="voxelPayloadCopyBtn" onclick="NexusUI.copyVoxelPayload()" title="Copy"
-                                class="flex-shrink-0 border border-zinc-700 rounded px-2 py-2 text-zinc-400 hover:text-yellow-400 hover:border-yellow-600 transition-all"
-                                style="min-width:28px;text-align:center;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                        </button>
-                    </div>
-                </div>
-
                 <div>
                     <label id="previewLabel" class="block text-[10px] text-zinc-500 uppercase font-bold mb-1">Full GCM Packet [Salt|IV|Ciphertext+Tag]</label>
                     <div class="flex items-center gap-2">
@@ -466,110 +422,38 @@
                     </div>
                 </div>
 
-                <!-- TRIPLE-LOCK 32-CHAR TOKEN -->
-                <div id="tripleTokenContainer" class="mt-3">
-                    <label class="block text-[10px] uppercase font-bold mb-1" style="color:#f59e0b;letter-spacing:2px;">
-                        TripleLock Token
-                        <span style="color:rgba(255,255,255,0.18);font-weight:normal;text-transform:none;letter-spacing:0;">
-                            &nbsp;·&nbsp;AES-GCM + HMAC-SHA256 + XOR-PBKDF2&nbsp;·&nbsp;32 hex chars&nbsp;·&nbsp;password-locked
-                        </span>
-                    </label>
-                    <div class="flex items-center gap-2">
-                        <textarea id="tripleTokenPreview" readonly
-                                  class="flex-1 rounded p-3 text-[11px] outline-none resize-none font-mono tracking-widest text-center font-bold"
-                                  style="background:#0d0a00;border:1px solid rgba(245,158,11,0.4);color:#fbbf24;min-height:36px;word-break:break-all;text-transform:uppercase;"
-                                  rows="1" placeholder="Requires passphrase…"></textarea>
-                        <button id="tripleTokenCopyBtn" onclick="NexusUI.copyWithTick('tripleTokenPreview','tripleTokenCopyBtn')"
-                                class="flex-shrink-0 border border-zinc-700 rounded px-2 py-2 text-zinc-400 hover:text-yellow-400 hover:border-yellow-600 transition-all"
-                                style="min-width:28px;text-align:center;" title="Copy Token">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                        </button>
-                    </div>
-                    <div class="flex justify-between mt-1" style="font-size:8px;color:rgba(255,255,255,0.18);letter-spacing:1px;">
-                        <span>L1: AES-256-GCM</span><span>L2: HMAC-SHA256</span><span>L3: XOR-PBKDF2</span><span>→ HEX[32]</span>
-                    </div>
-                </div>
-
                 <div class="flex justify-between items-center mt-2">
                     <div id="charCount" class="text-[10px] text-zinc-600 uppercase">0 Bytes</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- NFC MAPPER PANEL -->
-        <div class="panel-container" style="border-color:rgba(0,242,255,0.4);background:rgba(0,10,15,0.6);">
-            <h2 class="panel-title" style="color:#00f2ff;">
-                <span class="mr-2">📡</span> NFC Mapper
-                <span class="ml-2 text-[9px]" style="color:rgba(0,242,255,0.3);letter-spacing:2px;">MIFARE CLASSIC 1K · 45 BLOCKS</span>
-                <button id="compileBtn" onclick="NexusUI.generate()"
-                        style="margin-left:auto;font-size:9px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border-radius:4px;border:1px solid #00ff41;background:rgba(0,255,65,0.08);color:#00ff41;cursor:pointer;transition:all .2s;"
-                        onmouseover="this.style.background='#00ff41';this.style.color='#000'"
-                        onmouseout="this.style.background='rgba(0,255,65,0.08)';this.style.color='#00ff41'">
-                    Map Secure Blocks
-                </button>
-            </h2>
-
-            <!-- Mode tabs -->
-            <div style="display:flex;gap:8px;margin-bottom:14px;">
-                <button id="nmTabPacket" onclick="NexusUI.nmSwitchTab('packet')"
-                        style="font-size:9px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;padding:5px 12px;border-radius:4px;border:1px solid #00f2ff;background:rgba(0,242,255,0.12);color:#00f2ff;cursor:pointer;">
-                    Packet Mode
-                </button>
-                <button id="nmTabImage" onclick="NexusUI.nmSwitchTab('image')"
-                        style="font-size:9px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;padding:5px 12px;border-radius:4px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.3);cursor:pointer;">
-                    Image Payload
-                </button>
-            </div>
-
-            <!-- PACKET MODE output (existing MCT + BLK grid) -->
-            <div id="nmPacketMode">
-                <div id="outputArea" class="hidden">
-                    <div class="mb-4">
-                        <label id="mctLabel" class="block text-[10px] text-zinc-500 uppercase font-bold mb-1">MCT Ready Dump (Skips Sector Trailers)</label>
-                        <code id="mctPreview" class="mct-ascii"></code>
-                    </div>
-                    <div id="packetSequence" class="space-y-4"></div>
-                </div>
-                <div id="nmPacketEmpty" style="font-size:9px;color:rgba(255,255,255,0.15);letter-spacing:2px;text-transform:uppercase;text-align:center;padding:20px 0;">
-                    Hit "Map Secure Blocks" in Packet Compiler to populate
-                </div>
-            </div>
-
-            <!-- IMAGE PAYLOAD MODE — 45 BLKs × 32 hex chars = 1440 -->
-            <div id="nmImageMode" style="display:none;">
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-                    <div style="font-size:8px;letter-spacing:2px;color:rgba(0,242,255,0.4);text-transform:uppercase;">
-                        45 blocks · 32 hex chars each · 1440 total
-                    </div>
-                    <button onclick="NexusUI.nmCopyAll()"
-                            style="font-size:9px;font-weight:bold;letter-spacing:1px;text-transform:uppercase;padding:5px 12px;border-radius:4px;border:1px solid rgba(0,242,255,0.4);background:rgba(0,242,255,0.07);color:#00f2ff;cursor:pointer;transition:all .2s;"
-                            onmouseover="this.style.background='rgba(0,242,255,0.18)'"
-                            onmouseout="this.style.background='rgba(0,242,255,0.07)'">
-                        ⎘ Copy Full 1440
+                    <button id="compileBtn" onclick="NexusUI.generate()" class="bg-green-900/30 border border-green-500 text-green-400 px-4 py-1 rounded text-[10px] font-bold uppercase hover:bg-green-500 hover:text-black transition-all">
+                        Map Secure Blocks
                     </button>
                 </div>
-                <div id="nmImageEmpty" style="font-size:9px;color:rgba(255,255,255,0.15);letter-spacing:2px;text-transform:uppercase;text-align:center;padding:20px 0;">
-                    Use "↑ Upload Image ▼" → compress → "✓ Use as Payload" first
+            </div>
+
+            <div id="outputArea" class="hidden mt-4 pt-4 border-t border-zinc-800">
+                <div class="mb-4">
+                    <label id="mctLabel" class="block text-[10px] text-zinc-500 uppercase font-bold mb-1">MCT Ready Dump (Skips Sector Trailers)</label>
+                    <code id="mctPreview" class="mct-ascii"></code>
                 </div>
-                <div id="nmBlkGrid" style="display:none;display:flex;flex-direction:column;gap:4px;"></div>
+                <div id="packetSequence" class="space-y-4"></div>
             </div>
         </div>
 
         <!-- DECODE & EXECUTE PANEL -->
         <div class="panel-container border-yellow-500/50">
-            <div class="flex flex-col md:flex-row md:items-center justify-between mb-2 gap-2">
-                <h2 class="panel-title text-yellow-500 mb-0" style="white-space:nowrap;">
+            <div class="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-4">
+                <h2 class="panel-title text-yellow-500 mb-0">
                     <span class="mr-2">🔍</span> Secure Interpreter
                 </h2>
-                <div class="flex flex-col md:flex-row gap-2" style="min-width:0;width:100%;max-width:420px;">
-                    <select id="interpreterMode" class="bg-zinc-900 border border-zinc-700 p-2 rounded text-[10px] text-yellow-500 outline-none" style="min-width:0;flex:1;" onchange="NexusUI.onInterpreterModeChange()">
+                <div class="flex flex-col md:flex-row gap-2 flex-grow max-w-xl">
+                    <select id="interpreterMode" class="bg-zinc-900 border border-zinc-700 p-2 rounded text-[10px] text-yellow-500 outline-none" onchange="NexusUI.onInterpreterModeChange()">
                         <option value="HMAC_SIGNED" selected>AES-GCM Secured [S|IV|C]</option>
                         <option value="HYBRID">Hybrid (NDEF Sector 1 | NEXUS Sector 2+)</option>
                         <option value="NDEF_ONLY">NDEF Only (Phone Compatible)</option>
                         <option value="NEXUS_ONLY">NEXUS Only (Secure Custom)</option>
                         <option value="RAW_ASCII">Raw ASCII / UTF-8</option>
                     </select>
-                    <div id="interpreterSecretWrap" class="relative" style="flex:1;min-width:0;">
+                    <div id="interpreterSecretWrap" class="relative flex-grow">
                         <input type="password" id="interpreterSecret" placeholder="Enter secret key" class="w-full bg-zinc-900 border border-zinc-700 p-2 rounded text-[10px] text-yellow-500 outline-none pr-8">
                         <button onclick="NexusUI.toggleSecret('interpreterSecret', 'eyeSlash2')" class="absolute right-2 top-1.5 text-zinc-600 hover:text-yellow-500 transition-colors">
                             <svg id="eyeIcon2" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -582,102 +466,15 @@
                 </div>
             </div>
             
-            <textarea id="inputHex" placeholder="Paste full hex dump here..." rows="2" class="input-area text-center tracking-widest text-sm resize-none mb-2" style="padding:10px;font-size:11px;"></textarea>
+            <textarea id="inputHex" placeholder="Paste full hex dump here..." rows="3" class="input-area text-center tracking-widest text-sm resize-none mb-3"></textarea>
             
-            <div class="flex justify-end mb-1">
+            <div class="flex justify-end">
                 <button onclick="NexusUI.handleDecode()" class="action-btn">
                     Authenticate & Unlock
                 </button>
             </div>
 
             <div id="decodeResult" class="hidden mt-6 p-4 bg-black border border-zinc-800 rounded"></div>
-
-            <!-- TRIPLELOCK REVERSE DECODER — collapsible -->
-            <div style="margin-top:8px;border-top:1px solid rgba(245,158,11,0.1);">
-                <button onclick="(function(){const s=document.getElementById('tlBody');const a=document.getElementById('tlArrow');const open=s.style.display==='none'||s.style.display==='';s.style.display=open?'block':'none';a.style.transform=open?'rotate(180deg)':'rotate(0deg)';})()"
-                        style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:6px 0;background:none;border:none;cursor:pointer;">
-                    <span style="font-size:9px;font-weight:bold;letter-spacing:3px;text-transform:uppercase;color:rgba(245,158,11,0.45);">◈ TripleLock Reverse Decoder</span>
-                    <span id="tlArrow" style="color:rgba(245,158,11,0.4);transition:transform .2s;font-size:10px;">▼</span>
-                </button>
-                <div id="tlBody" style="display:none;">
-                <div style="font-size:8px;color:rgba(255,255,255,0.2);letter-spacing:1px;margin-bottom:12px;">
-                    32-hex token + secret → L3 XOR → L2 HMAC → L1 AES-GCM → payload
-                </div>
-                <div style="display:flex;flex-direction:column;gap:10px;">
-                    <div style="display:grid;grid-template-columns:1fr auto;gap:10px;align-items:start;">
-                        <div>
-                            <div style="font-size:8px;letter-spacing:2px;color:rgba(255,255,255,0.2);margin-bottom:4px;">32-HEX TOKEN</div>
-                            <textarea id="tlTokenInput" placeholder="Paste 32-char hex token (0-9, A-F)…"
-                                      style="width:100%;height:44px;background:#0d0a00;border:1px solid rgba(245,158,11,0.2);color:#fbbf24;font-family:'Fira Code',monospace;padding:10px;border-radius:6px;resize:none;font-size:0.75rem;outline:none;box-sizing:border-box;text-align:center;letter-spacing:2px;font-weight:bold;text-transform:uppercase;"></textarea>
-                        </div>
-                        <div style="min-width:160px;">
-                            <div style="font-size:8px;letter-spacing:2px;color:rgba(255,255,255,0.2);margin-bottom:4px;">SECRET KEY</div>
-                            <div style="position:relative;">
-                                <input type="password" id="tlSecret" placeholder="Enter secret key"
-                                       style="width:100%;background:#0d0a00;border:1px solid rgba(245,158,11,0.2);color:#fbbf24;font-family:'Fira Code',monospace;padding:8px 28px 8px 10px;border-radius:6px;font-size:0.7rem;outline:none;box-sizing:border-box;">
-                                <button onclick="const e=document.getElementById('tlSecret');e.type=e.type==='password'?'text':'password'"
-                                        style="position:absolute;right:6px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.3);font-size:12px;">👁</button>
-                            </div>
-                        </div>
-                    </div>
-                    <button onclick="NexusUI.decodeTripleLock()"
-                            style="width:100%;padding:10px;font-size:10px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;background:rgba(245,158,11,0.07);color:#f59e0b;border:1px solid rgba(245,158,11,0.35);cursor:pointer;border-radius:4px;transition:all .2s;"
-                            onmouseover="this.style.background='rgba(245,158,11,0.18)';this.style.borderColor='#f59e0b'"
-                            onmouseout="this.style.background='rgba(245,158,11,0.07)';this.style.borderColor='rgba(245,158,11,0.35)'">
-                        🔓 Reverse Decode TripleLock Token
-                    </button>
-                    <div id="tlDecodeResult" style="display:none;background:#000;border:1px solid rgba(245,158,11,0.15);border-radius:8px;padding:14px;font-family:'Fira Code',monospace;font-size:11px;"></div>
-                </div>
-                </div><!-- /tlBody -->
-            </div><!-- /triplelock collapsible -->
-
-            <!-- VOXEL RECONSTRUCTION TERMINAL — collapsible -->
-            <div style="margin-top:6px;border-top:1px solid rgba(255,220,0,0.08);">
-                <button onclick="(function(){const s=document.getElementById('voxBody');const a=document.getElementById('voxArrow');const open=s.style.display==='none'||s.style.display==='';s.style.display=open?'block':'none';a.style.transform=open?'rotate(180deg)':'rotate(0deg)';})()"
-                        style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:6px 0;background:none;border:none;cursor:pointer;">
-                    <span style="font-size:9px;font-weight:bold;letter-spacing:3px;text-transform:uppercase;color:rgba(232,255,71,0.35);">⬡ Voxel Reconstruction Terminal</span>
-                    <span id="voxArrow" style="color:rgba(232,255,71,0.3);transition:transform .2s;font-size:10px;">▼</span>
-                </button>
-                <div id="voxBody" style="display:none;">
-                <div style="display:flex;flex-direction:column;gap:10px;">
-                    <!-- Hex input -->
-                    <textarea id="voxReconInput" placeholder="Paste HEX stream here. The engine reads the structural header automatically…"
-                              style="width:100%;height:60px;background:#000;border:1px solid rgba(255,220,0,0.15);color:#e8ff47;font-family:'Fira Code',monospace;padding:10px;border-radius:6px;resize:none;font-size:0.72rem;outline:none;box-sizing:border-box;"></textarea>
-
-                    <!-- Dither slider -->
-                    <div>
-                        <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
-                            <span style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,220,0,0.4);">Dither Error Diffusion</span>
-                            <span id="voxDithVal" style="font-size:11px;font-weight:bold;color:#e8ff47;">0%</span>
-                        </div>
-                        <input type="range" id="voxDithSlider" min="0" max="100" value="0"
-                               style="-webkit-appearance:none;width:100%;height:3px;background:rgba(255,255,255,0.08);outline:none;cursor:pointer;border-radius:0;"
-                               oninput="document.getElementById('voxDithVal').textContent=this.value+'%'; if(NIM._lastVoxRaw) NIM.reconstruct();">
-                        <div style="display:flex;justify-content:space-between;font-size:8px;color:rgba(255,255,255,0.18);letter-spacing:1px;margin-top:3px;">
-                            <span>0% — Raw mosaic</span><span>100% — Max contrast</span>
-                        </div>
-                    </div>
-
-                    <!-- Button + compact output side by side -->
-                    <div style="display:flex;flex-direction:row;gap:10px;align-items:start;flex-wrap:nowrap;overflow:hidden;">
-                        <div style="display:flex;flex-direction:column;gap:8px;min-width:140px;">
-                            <button onclick="NIM.reconstruct()"
-                                    style="padding:10px 14px;font-size:9px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;background:rgba(232,255,71,0.07);color:#e8ff47;border:1px solid rgba(232,255,71,0.35);cursor:pointer;border-radius:4px;transition:all .2s;width:100%;"
-                                    onmouseover="this.style.background='rgba(232,255,71,0.18)';this.style.borderColor='#e8ff47'"
-                                    onmouseout="this.style.background='rgba(232,255,71,0.07)';this.style.borderColor='rgba(232,255,71,0.35)'">
-                                ⬡ Extract &amp;<br>Render Blend
-                            </button>
-                            <div id="voxReconInfo" style="font-size:8px;color:rgba(255,255,255,0.2);letter-spacing:1px;text-align:center;"></div>
-                        </div>
-                        <!-- Compact mosaic preview — 200px wide tile -->
-                        <div id="voxReconPreviewBox" style="width:200px;min-width:200px;max-width:200px;background:repeating-conic-gradient(#141414 0% 25%,#0d0d10 0% 50%) 0 0/12px 12px;border:1px solid rgba(255,220,0,0.15);border-radius:6px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;min-height:120px;">
-                            <span id="voxReconPlaceholder" style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.12);">Awaiting…</span>
-                            <canvas id="voxReconCanvas" style="display:none;image-rendering:pixelated;image-rendering:crisp-edges;"></canvas>
-                        </div>
-                    </div>
-                </div>
-                </div><!-- /voxBody -->
-            </div><!-- /voxel collapsible -->
         </div>
 
         <div class="status-footer">
@@ -909,10 +706,6 @@
                                 .map(b => b.toString(16).padStart(2,'0').toUpperCase()).join('');
                             document.getElementById('charCount').textContent = `${packet.length} Bytes`;
 
-                            // TripleLock: encode fingerprint + packet into 32-char token
-                            const fpHex = Array.from(new Uint8Array(fpBuffer)).map(b=>b.toString(16).padStart(2,'0')).join('').toUpperCase();
-                            NexusUI._tripleEncode(fpHex, packet, secret);
-
                         } catch (e) {
                             document.getElementById('hexPreview').value = "[CRYPTO_ERR]";
                             console.error(e);
@@ -968,8 +761,6 @@
                         </div>
                     </div>`).join('');
                 document.getElementById('outputArea').classList.remove('hidden');
-                const nmEmpty = document.getElementById('nmPacketEmpty');
-                if (nmEmpty) nmEmpty.style.display = 'none';
             },
             handleDecode: async function() {
                 const rawInput = document.getElementById('inputHex').value.trim();
@@ -1011,17 +802,8 @@
 
                 try {
                     const inputBytes = new Uint8Array(cleanInput.match(/.{1,2}/g).map(h => parseInt(h, 16)));
-                    // Try all known CMDs — AAD must match what was used during encryption
-                    const knownCmds = ['01','02','0A'];
-                    let data = null, lastErr = null;
-                    for (const tryCmd of knownCmds) {
-                        try {
-                            const decrypted = await NexusCrypto.decrypt(secret, inputBytes, tryCmd);
-                            data = NexusProtocol.parseSecureBuffer(decrypted);
-                            break;
-                        } catch(e) { lastErr = e; }
-                    }
-                    if (!data) throw lastErr;
+                    const decrypted = await NexusCrypto.decrypt(secret, inputBytes, '01'); // default CMD; user can extend
+                    const data = NexusProtocol.parseSecureBuffer(decrypted);
                     
                     out.innerHTML = `
                         <div class="verified-output border-green-500">
@@ -1075,81 +857,6 @@
                 btn.style.borderColor = '#00ff41';
                 setTimeout(() => { btn.innerHTML = orig; btn.style.color = ''; btn.style.borderColor = ''; }, 1500);
             },
-            nmSwitchTab: function(tab) {
-                const isImage = tab === 'image';
-                document.getElementById('nmPacketMode').style.display = isImage ? 'none' : 'block';
-                document.getElementById('nmImageMode').style.display  = isImage ? 'block' : 'none';
-                const tPkt = document.getElementById('nmTabPacket');
-                const tImg = document.getElementById('nmTabImage');
-                tPkt.style.border   = isImage ? '1px solid rgba(255,255,255,0.1)' : '1px solid #00f2ff';
-                tPkt.style.background = isImage ? 'transparent' : 'rgba(0,242,255,0.12)';
-                tPkt.style.color    = isImage ? 'rgba(255,255,255,0.3)' : '#00f2ff';
-                tImg.style.border   = isImage ? '1px solid #00f2ff' : '1px solid rgba(255,255,255,0.1)';
-                tImg.style.background = isImage ? 'rgba(0,242,255,0.12)' : 'transparent';
-                tImg.style.color    = isImage ? '#00f2ff' : 'rgba(255,255,255,0.3)';
-            },
-
-            nmPopulateImage: function(hex1440) {
-                // hex1440: exactly 1440 hex chars — split into 45 blocks of 32
-                const grid   = document.getElementById('nmBlkGrid');
-                const empty  = document.getElementById('nmImageEmpty');
-                const BLOCK_SIZE = 32;
-                const BLOCKS = 45;
-                // Pad/trim to exactly 1440
-                let payload = (hex1440 || '').toUpperCase().substring(0, 1440).padEnd(1440, '0');
-                grid.innerHTML = '';
-                for (let i = 0; i < BLOCKS; i++) {
-                    const chunk = payload.substring(i * BLOCK_SIZE, (i + 1) * BLOCK_SIZE);
-                    const blkNum = i + 1;
-                    const row = document.createElement('div');
-                    row.style.cssText = 'display:flex;align-items:center;gap:8px;';
-                    row.innerHTML = `
-                        <div style="font-size:9px;font-weight:bold;color:rgba(0,242,255,0.5);letter-spacing:1px;min-width:44px;text-align:right;font-family:'Fira Code',monospace;">BLK ${String(blkNum).padStart(2,'0')}</div>
-                        <div style="flex:1;background:#000;border:1px solid rgba(0,242,255,0.12);border-radius:4px;padding:5px 8px;font-family:'Fira Code',monospace;font-size:10px;color:#00f2ff;letter-spacing:2px;word-break:break-all;">${chunk}</div>
-                        <button onclick="NexusUI.nmCopyBlk(this,'${chunk}')" title="Copy BLK ${blkNum}"
-                                style="flex-shrink:0;border:1px solid rgba(255,255,255,0.1);border-radius:4px;padding:4px 6px;background:transparent;color:rgba(255,255,255,0.3);cursor:pointer;transition:all .15s;"
-                                onmouseover="this.style.color='#00f2ff';this.style.borderColor='rgba(0,242,255,0.5)'"
-                                onmouseout="this.style.color='rgba(255,255,255,0.3)';this.style.borderColor='rgba(255,255,255,0.1)'">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                        </button>`;
-                    grid.appendChild(row);
-                }
-                grid.style.display = 'flex';
-                empty.style.display = 'none';
-                // Store for copy-all
-                NexusUI._nm1440 = payload;
-            },
-
-            nmCopyBlk: function(btn, hex) {
-                navigator.clipboard.writeText(hex).catch(() => {});
-                const orig = btn.innerHTML;
-                btn.innerHTML = '<span style="color:#00f2ff;font-size:11px;font-weight:bold;">✓</span>';
-                btn.style.borderColor = '#00f2ff';
-                setTimeout(() => { btn.innerHTML = orig; btn.style.borderColor = 'rgba(255,255,255,0.1)'; }, 1200);
-            },
-
-            nmCopyAll: function() {
-                const payload = NexusUI._nm1440 || '';
-                if (!payload) return;
-                navigator.clipboard.writeText(payload).catch(() => {});
-                const btn = event.target.closest('button');
-                const orig = btn.textContent;
-                btn.textContent = '✓ Copied 1440!';
-                btn.style.color = '#22c55e';
-                btn.style.borderColor = '#22c55e';
-                setTimeout(() => { btn.textContent = orig; btn.style.color = '#00f2ff'; btn.style.borderColor = 'rgba(0,242,255,0.4)'; }, 1500);
-            },
-
-            copyVoxelPayload: () => {
-                const val = document.getElementById('voxelPayloadHex')?.value || '';
-                NexusUI.copy(val);
-                const btn = document.getElementById('voxelPayloadCopyBtn');
-                if (!btn) return;
-                const orig = btn.innerHTML;
-                btn.innerHTML = `<span style="color:#facc15;font-size:13px;font-weight:700;">✓</span>`;
-                btn.style.borderColor = '#facc15';
-                setTimeout(() => { btn.innerHTML = orig; btn.style.borderColor = ''; }, 1500);
-            },
             copyRawHex: () => {
                 const val = document.getElementById('rawHexPreview').value || '0'.repeat(32);
                 NexusUI.copy(val);
@@ -1197,20 +904,6 @@ input[type=range]#nimQualSlider::-moz-range-thumb {
     width: 15px; height: 15px;
     background: #00f2ff; cursor: grab; border-radius: 0; border: none;
 }
-input[type=range]#nimVoxSlider::-webkit-slider-thumb,
-input[type=range]#nimDithSlider::-webkit-slider-thumb,
-input[type=range]#voxDithSlider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 15px; height: 15px;
-    background: #e8ff47; cursor: grab; border-radius: 0;
-    box-shadow: 0 0 8px rgba(232,255,71,.5);
-}
-input[type=range]#nimVoxSlider::-moz-range-thumb,
-input[type=range]#nimDithSlider::-moz-range-thumb,
-input[type=range]#voxDithSlider::-moz-range-thumb {
-    width: 15px; height: 15px;
-    background: #e8ff47; cursor: grab; border-radius: 0; border: none;
-}
 </style>
 
 <script>
@@ -1221,12 +914,9 @@ const NIM = {
     origFile: null,
     origDataUrl: null,
     outBlob: null,
-    outHex: null,
     quality: 82,
     format: 'JPG',
     targetKb: 50,
-    voxelBudget: 480,
-    ditherStrength: 0.5,
     _open: false,
 
     toggle() {
@@ -1270,9 +960,7 @@ const NIM = {
                 document.getElementById('nimUseBtn').disabled = true;
                 document.getElementById('nimUseBtn').style.opacity = '.4';
                 document.getElementById('nimUseBtn').style.cursor = 'not-allowed';
-                document.getElementById('nimMinHint').textContent = '';
-                // auto-run on load
-                NIM.compress();
+                document.getElementById('nimMinHint').textContent = 'Hit ⚡ Compress to process';
             };
             img.src = this.origDataUrl;
         };
@@ -1290,33 +978,14 @@ const NIM = {
         document.getElementById('nimMinHint').textContent = '';
     },
 
-    _debounceTimer: null,
-
-    _liveCompress() {
-        clearTimeout(this._debounceTimer);
-        this._debounceTimer = setTimeout(() => this.compress(), 300);
-    },
-
     onQualSlider(v) {
         this.quality = parseInt(v);
         document.getElementById('nimQualVal').textContent = v + '%';
-        if (this.origDataUrl) this._liveCompress();
-    },
-
-    onVoxSlider(v) {
-        this.voxelBudget = parseInt(v);
-        document.getElementById('nimVoxVal').textContent = v + 'px';
-        if (this.origDataUrl) this._liveCompress();
-    },
-
-    onDithSlider(v) {
-        this.ditherStrength = parseInt(v) / 100;
-        document.getElementById('nimDithVal').textContent = v + '%';
-        if (this.origDataUrl) this._liveCompress();
-    },
-
-    _markStale(msg) {
-        // no-op now — sliders drive live; kept for compat
+        // clear stale output to signal re-compress needed
+        document.getElementById('nimUseBtn').disabled = true;
+        document.getElementById('nimUseBtn').style.opacity = '.4';
+        document.getElementById('nimUseBtn').style.cursor = 'not-allowed';
+        document.getElementById('nimMinHint').textContent = 'Hit ⚡ Compress to apply changes';
     },
 
     setFormat(fmt, el) {
@@ -1329,7 +998,10 @@ const NIM = {
         el.style.border = '1px solid #00ff41';
         el.style.background = 'rgba(0,255,65,0.1)';
         el.style.color = '#00ff41';
-        if (this.origDataUrl) this._liveCompress();
+        document.getElementById('nimUseBtn').disabled = true;
+        document.getElementById('nimUseBtn').style.opacity = '.4';
+        document.getElementById('nimUseBtn').style.cursor = 'not-allowed';
+        document.getElementById('nimMinHint').textContent = 'Hit ⚡ Compress to apply changes';
     },
 
     applyPreset(kb, el) {
@@ -1342,290 +1014,104 @@ const NIM = {
         el.style.border = '1px solid rgba(127,119,221,0.6)';
         el.style.background = 'rgba(127,119,221,0.1)';
         el.style.color = '#c4b5fd';
-        if (this.origDataUrl) this._liveCompress();
-    },
-
-    // ── VOXEL ENGINE HELPERS ──────────────────────────────────────
-    _distributeError(data, i, w, er, eg, eb) {
-        const add = (idx, f) => {
-            if (idx < 0 || idx >= data.length) return;
-            data[idx]   = Math.min(255, Math.max(0, data[idx]   + er * f));
-            data[idx+1] = Math.min(255, Math.max(0, data[idx+1] + eg * f));
-            data[idx+2] = Math.min(255, Math.max(0, data[idx+2] + eb * f));
-        };
-        add(i + 4,          7/16);
-        add(i + (w*4) - 4,  3/16);
-        add(i + (w*4),      5/16);
-        add(i + (w*4) + 4,  1/16);
-    },
-
-    _voxelProcess(sourceDataUrl, budget, ditherStrength) {
-        return new Promise(resolve => {
-            const img = new Image();
-            img.onload = () => {
-                const aspect = img.naturalWidth / img.naturalHeight;
-
-                // Full budget w×h for the pixelated mosaic PREVIEW
-                let h = Math.max(1, Math.round(Math.sqrt(budget / aspect)));
-                let w = Math.max(1, Math.round(budget / h));
-
-                // For the HEX PAYLOAD: find largest w×h that fits 1440 chars
-                // preserving the same aspect ratio as the preview grid
-                // 1440 - 4 (header) = 1436 data chars / 3 per pixel = 478 max pixels
-                // w_hex / h_hex = w / h  →  w_hex = h_hex * aspect
-                // w_hex * h_hex <= 478  →  h_hex = floor(sqrt(478 / aspect))
-                const MAX_PIXELS = 478;
-                let hw = Math.max(1, Math.floor(Math.sqrt(MAX_PIXELS / aspect)));
-                let ww = Math.max(1, Math.floor(MAX_PIXELS / hw));
-                // trim to exact complete rows
-                if (ww * hw > MAX_PIXELS) hw = Math.floor(MAX_PIXELS / ww);
-
-                // PREVIEW canvas: full w×h mosaic (intentional pixelated look)
-                const off = document.createElement('canvas');
-                off.width = w; off.height = h;
-                const oCtx = off.getContext('2d');
-                oCtx.filter = 'blur(0.4px)';
-                oCtx.drawImage(img, 0, 0, w, h);
-
-                const imgData = oCtx.getImageData(0, 0, w, h);
-                const pixels  = imgData.data;
-
-                // HEX canvas: smaller ww×hw that fits in 1440 chars, same aspect ratio
-                const offHex = document.createElement('canvas');
-                offHex.width = ww; offHex.height = hw;
-                const oCtxHex = offHex.getContext('2d');
-                oCtxHex.filter = 'blur(0.4px)';
-                oCtxHex.drawImage(img, 0, 0, ww, hw);
-                const imgDataHex = oCtxHex.getImageData(0, 0, ww, hw);
-                const pixelsHex  = imgDataHex.data;
-
-                // Floyd-Steinberg on PREVIEW pixels
-                const COLOR_STEPS = 17;
-                for (let pi = 0; pi < pixels.length; pi += 4) {
-                    let r = pixels[pi], g = pixels[pi+1], b = pixels[pi+2];
-                    const qr = Math.round(r / COLOR_STEPS) * COLOR_STEPS;
-                    const qg = Math.round(g / COLOR_STEPS) * COLOR_STEPS;
-                    const qb = Math.round(b / COLOR_STEPS) * COLOR_STEPS;
-                    if (ditherStrength > 0) {
-                        this._distributeError(pixels, pi, w,
-                            (r - qr) * ditherStrength,
-                            (g - qg) * ditherStrength,
-                            (b - qb) * ditherStrength);
-                    }
-                    pixels[pi] = qr; pixels[pi+1] = qg; pixels[pi+2] = qb;
-                }
-
-                // Floyd-Steinberg on HEX pixels
-                for (let pi = 0; pi < pixelsHex.length; pi += 4) {
-                    let r = pixelsHex[pi], g = pixelsHex[pi+1], b = pixelsHex[pi+2];
-                    const qr = Math.round(r / COLOR_STEPS) * COLOR_STEPS;
-                    const qg = Math.round(g / COLOR_STEPS) * COLOR_STEPS;
-                    const qb = Math.round(b / COLOR_STEPS) * COLOR_STEPS;
-                    if (ditherStrength > 0) {
-                        this._distributeError(pixelsHex, pi, ww,
-                            (r - qr) * ditherStrength,
-                            (g - qg) * ditherStrength,
-                            (b - qb) * ditherStrength);
-                    }
-                    pixelsHex[pi] = qr; pixelsHex[pi+1] = qg; pixelsHex[pi+2] = qb;
-                }
-
-                // Build hex from the HEX canvas (ww×hw, fits in 1440)
-                const pixelCap = ww * hw;
-                const header = ww.toString(16).padStart(2,'0').toUpperCase() +
-                               hw.toString(16).padStart(2,'0').toUpperCase();
-                let hex = header;
-                let pixCount = 0;
-                for (let pi = 0; pi < pixelsHex.length; pi += 4) {
-                    if (pixCount >= pixelCap) break;
-                    hex += (Math.round(pixelsHex[pi]   / COLOR_STEPS)).toString(16).toUpperCase();
-                    hex += (Math.round(pixelsHex[pi+1] / COLOR_STEPS)).toString(16).toUpperCase();
-                    hex += (Math.round(pixelsHex[pi+2] / COLOR_STEPS)).toString(16).toUpperCase();
-                    pixCount++;
-                }
-
-                // Scale up PREVIEW canvas for display
-                const smallC = document.createElement('canvas');
-                smallC.width = w; smallC.height = h;
-                smallC.getContext('2d').putImageData(imgData, 0, 0);
-
-                // Scale up to original image dimensions for a visible preview
-                const dispW = img.naturalWidth  || Math.max(w * 8, 480);
-                const dispH = img.naturalHeight || Math.max(h * 8, 320);
-                const outC = document.createElement('canvas');
-                outC.width = dispW; outC.height = dispH;
-                const outCtx = outC.getContext('2d');
-                outCtx.imageSmoothingEnabled = false; // pixelated / voxel look
-                outCtx.drawImage(smallC, 0, 0, dispW, dispH);
-                outC.toBlob(blob => resolve({ blob, hex, w: ww, h: hw }), 'image/jpeg', this.quality / 100);
-            };
-            img.src = sourceDataUrl;
-        });
+        document.getElementById('nimMinHint').textContent = 'Target: ' + kb + 'KB · Hit ⚡ Compress';
     },
 
     compress() {
-        if (!this.origDataUrl) return;
+        if (!this.origFile) return;
+        // show spinner
+        const spinner = document.getElementById('nimSpinner');
+        spinner.style.display = 'flex';
+        document.getElementById('nimOutImg').src = '';
+        document.getElementById('nimDeltaBadge').style.display = 'none';
+        document.getElementById('nimUseBtn').disabled = true;
+        document.getElementById('nimUseBtn').style.opacity = '.4';
+        document.getElementById('nimUseBtn').style.cursor = 'not-allowed';
 
-        const budget      = this.voxelBudget   || 480;
-        const ditherStr   = (this.ditherStrength !== undefined) ? this.ditherStrength : 0.5;
+        setTimeout(() => this._runCompress(), 30); // let spinner paint
+    },
 
-        this._voxelProcess(this.origDataUrl, budget, ditherStr).then(({ blob, hex, w, h }) => {
-            this.outBlob = blob;
-            this.outHex  = hex;
+    _runCompress() {
+        const img = new Image();
+        img.onload = () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.naturalWidth;
+            canvas.height = img.naturalHeight;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0);
 
-            // Update 1440-char voxel payload box live — pad remainder with 0s
-            const LIMIT = 1440;
-            const payload = hex.length >= LIMIT
-                ? hex.substring(0, LIMIT)
-                : hex.padEnd(LIMIT, '0');
-            const voxBox = document.getElementById('voxelPayloadHex');
-            if (voxBox) voxBox.value = payload;
+            const mimeMap = { JPG:'image/jpeg', PNG:'image/png', WEBP:'image/webp' };
+            const mime = mimeMap[this.format] || 'image/jpeg';
+            const targetBytes = this.targetKb * 1024;
+            const origSize = this.origFile.size;
 
-            const url = URL.createObjectURL(blob);
-            document.getElementById('nimOutImg').src = url;
-            document.getElementById('nimOutSize').textContent = this._fmt(blob.size);
+            const done = blob => {
+                if (!blob) { document.getElementById('nimSpinner').style.display = 'none'; return; }
+                this.outBlob = blob;
+                const url = URL.createObjectURL(blob);
+                document.getElementById('nimOutImg').src = url;
+                document.getElementById('nimOutSize').textContent = this._fmt(blob.size);
+                document.getElementById('nimSpinner').style.display = 'none';
 
-            // enable use button
-            const useBtn = document.getElementById('nimUseBtn');
-            useBtn.disabled = false;
-            useBtn.style.opacity = '1';
-            useBtn.style.cursor = 'pointer';
+                // enable use button
+                const useBtn = document.getElementById('nimUseBtn');
+                useBtn.disabled = false;
+                useBtn.style.opacity = '1';
+                useBtn.style.cursor = 'pointer';
 
-            // delta badge
-            const origSize = this.origFile ? this.origFile.size : blob.size;
-            const pct = Math.round((1 - blob.size / origSize) * 100);
-            const badge = document.getElementById('nimDeltaBadge');
-            badge.style.display = 'inline-block';
-            if (pct > 0) {
-                badge.textContent = '↓ ' + pct + '% smaller';
-                badge.style.cssText += ';background:rgba(59,109,17,.25);color:#7ecb42;border:1px solid rgba(126,203,66,.2);padding:2px 8px;font-size:9px;font-weight:bold;letter-spacing:1px;text-transform:uppercase;';
-            } else {
-                badge.textContent = '↑ ' + Math.abs(pct) + '% larger';
-                badge.style.cssText += ';background:rgba(133,79,11,.25);color:#f5a623;border:1px solid rgba(245,166,35,.2);padding:2px 8px;font-size:9px;font-weight:bold;letter-spacing:1px;text-transform:uppercase;';
+                // delta badge
+                const pct = Math.round((1 - blob.size / origSize) * 100);
+                const badge = document.getElementById('nimDeltaBadge');
+                badge.style.display = 'inline-block';
+                if (pct > 0) {
+                    badge.textContent = '↓ ' + pct + '% smaller';
+                    badge.style.cssText += ';background:rgba(59,109,17,.25);color:#7ecb42;border:1px solid rgba(126,203,66,.2);padding:2px 8px;font-size:9px;font-weight:bold;letter-spacing:1px;text-transform:uppercase;';
+                } else {
+                    badge.textContent = '↑ ' + Math.abs(pct) + '% larger';
+                    badge.style.cssText += ';background:rgba(133,79,11,.25);color:#f5a623;border:1px solid rgba(245,166,35,.2);padding:2px 8px;font-size:9px;font-weight:bold;letter-spacing:1px;text-transform:uppercase;';
+                }
+                document.getElementById('nimMinHint').textContent =
+                    this._fmt(origSize) + '  →  ' + this._fmt(blob.size) + (pct > 0 ? '  (' + pct + '% saved)' : '');
+            };
+
+            // PNG: no quality knob
+            if (this.format === 'PNG') {
+                canvas.toBlob(done, mime);
+                return;
             }
-            document.getElementById('nimMinHint').textContent =
-                this._fmt(origSize) + '  →  ' + this._fmt(blob.size) +
-                '  ·  Grid: ' + w + '×' + h +
-                (pct > 0 ? '  (' + pct + '% saved)' : '');
-        });
+
+            // JPG/WEBP: binary-search to hit target size
+            let lo = 0.01, hi = 1.0, best = null, iter = 0;
+            const tryQ = q => {
+                canvas.toBlob(blob => {
+                    iter++;
+                    if (!best || Math.abs(blob.size - targetBytes) < Math.abs(best.size - targetBytes))
+                        best = blob;
+                    if (Math.abs(blob.size - targetBytes) < targetBytes * 0.06 || iter > 18) {
+                        done(best); return;
+                    }
+                    if (blob.size > targetBytes) hi = q; else lo = q;
+                    tryQ((lo + hi) / 2);
+                }, mime, q);
+            };
+            tryQ(this.quality / 100);
+        };
+        img.onerror = () => document.getElementById('nimSpinner').style.display = 'none';
+        img.src = this.origDataUrl;
     },
 
     useImage() {
-        if (!this.outHex) return;
-
-        // Enforce exactly 1440 chars — never truncate mid-row (encoder already handles this)
-        const LIMIT = 1440;
-        const payload = this.outHex.length >= LIMIT
-            ? this.outHex.substring(0, LIMIT)
-            : this.outHex.padEnd(LIMIT, '0');
-
-        // Insert into main payload text input
-        document.getElementById('textInput').value = payload;
-        NexusUI.syncHex();
-
-        // Update the 1440-char voxel payload display box
-        const voxBox = document.getElementById('voxelPayloadHex');
-        if (voxBox) voxBox.value = payload;
-
-        // Auto-populate NFC Mapper image tab
-        NexusUI.nmPopulateImage(payload);
-        NexusUI.nmSwitchTab('image');
-
-        // Collapse section
-        this._open = false;
-        document.getElementById('nimSection').style.display = 'none';
-        document.getElementById('nimToggleArrow').style.transform = '';
-    },
-
-    // ── VOXEL RECONSTRUCTION (Secure Interpreter terminal) ────────
-    reconstruct() {
-        const rawInput = document.getElementById('voxReconInput').value.replace(/[^0-9A-Fa-f]/g, '').toUpperCase();
-        // Use cached raw if slider triggered re-render, else use fresh input
-        const raw = rawInput.length >= 10 ? rawInput : (NIM._lastVoxRaw || '');
-        if (rawInput.length >= 10) NIM._lastVoxRaw = rawInput; // cache latest valid input
-        const canvas = document.getElementById('voxReconCanvas');
-        const ph = document.getElementById('voxReconPlaceholder');
-        const info = document.getElementById('voxReconInfo');
-        if (raw.length < 10) { ph.textContent = 'Too short.'; ph.style.display='block'; canvas.style.display='none'; return; }
-
-        const w = parseInt(raw.substring(0, 2), 16);
-        const h = parseInt(raw.substring(2, 4), 16);
-        if (!w || !h) { ph.textContent = 'Bad header.'; return; }
-
-        const pixelData = raw.substring(4);
-        // Strip trailing zero-pad — find last non-zero pixel triplet
-        let validEnd = pixelData.length;
-        while (validEnd > 3 && pixelData[validEnd-1]==='0' && pixelData[validEnd-2]==='0' && pixelData[validEnd-3]==='0') {
-            validEnd -= 3;
-        }
-        const totalAvail = Math.floor(validEnd / 3);
-        const total = Math.min(w * h, totalAvail);
-
-        // Read dither slider — 0=raw mosaic, 1=max contrast
-        const dither = parseInt(document.getElementById('voxDithSlider').value) / 100;
-        const COLOR_STEPS = 17;
-
-        // Step 1: decode pixels into flat RGB array
-        const rgbData = new Uint8ClampedArray(w * h * 4);
-        for (let i = 0; i < total; i++) {
-            const o = i * 3;
-            let r = parseInt(pixelData[o],   16) * COLOR_STEPS;
-            let g = parseInt(pixelData[o+1], 16) * COLOR_STEPS;
-            let b = parseInt(pixelData[o+2], 16) * COLOR_STEPS;
-            if (isNaN(r)||isNaN(g)||isNaN(b)) { r=g=b=0; }
-
-            // Apply dither contrast: push values toward 0 or 255 based on strength
-            if (dither > 0) {
-                r = Math.round(r + (r < 128 ? -r : 255 - r) * dither * 0.6);
-                g = Math.round(g + (g < 128 ? -g : 255 - g) * dither * 0.6);
-                b = Math.round(b + (b < 128 ? -b : 255 - b) * dither * 0.6);
-                r = Math.max(0, Math.min(255, r));
-                g = Math.max(0, Math.min(255, g));
-                b = Math.max(0, Math.min(255, b));
-            }
-
-            const idx = i * 4;
-            rgbData[idx]   = r;
-            rgbData[idx+1] = g;
-            rgbData[idx+2] = b;
-            rgbData[idx+3] = 255;
-        }
-
-        // Step 2: paint hard pixel blocks directly — NO interpolation, crisp mosaic
-        // Block size fills ~200px width with hard-edged squares
-        const blockSize = Math.max(4, Math.floor(200 / w));
-        const dispW = w * blockSize;
-        const dispH = h * blockSize;
-
-        canvas.width  = dispW;
-        canvas.height = dispH;
-        const ctx = canvas.getContext('2d');
-        ctx.imageSmoothingEnabled = false;
-
-        // Each pixel → solid hard-edged rectangle = crisp voxel block
-        for (let i = 0; i < total; i++) {
-            const px  = i % w;
-            const py  = Math.floor(i / w);
-            const idx = i * 4;
-            ctx.fillStyle = `rgb(${rgbData[idx]},${rgbData[idx+1]},${rgbData[idx+2]})`;
-            ctx.fillRect(px * blockSize, py * blockSize, blockSize, blockSize);
-        }
-
-        canvas.style.display = 'block';
-        canvas.style.width = dispW + 'px';
-        canvas.style.height = dispH + 'px';
-        ph.style.display = 'none';
-        const box = document.getElementById('voxReconPreviewBox');
-        box.style.height = dispH + 'px';
-        box.style.minHeight = dispH + 'px';
-        // width stays hard-locked at 200px from CSS
-        if (info) info.textContent = `${w}×${h} · ${blockSize}px blocks`;
-
-        canvas.style.display = 'block';
-        ph.style.display = 'none';
-        box.style.minHeight = 'unset';
-        box.style.height = dispH + 'px';
-        box.style.alignItems = 'flex-start';
+        if (!this.outBlob) return;
+        const reader = new FileReader();
+        reader.onload = ev => {
+            document.getElementById('textInput').value = ev.target.result;
+            NexusUI.syncHex();
+            // collapse section
+            this._open = false;
+            document.getElementById('nimSection').style.display = 'none';
+            document.getElementById('nimToggleArrow').style.transform = '';
+        };
+        reader.readAsDataURL(this.outBlob);
     },
 
     _fmt(bytes) {
@@ -1634,176 +1120,6 @@ const NIM = {
         return (bytes / 1048576).toFixed(1) + ' MB';
     }
 };
-
-        // ══════════════════════════════════════════════════════════
-        // TRIPLELOCK ENGINE
-        // L1: AES-256-GCM  (confidentiality)
-        // L2: HMAC-SHA256  (integrity envelope)
-        // L3: XOR-PBKDF2   (obfuscation + key hardening)
-        // Output: Base62 → exactly 32 chars
-        // ══════════════════════════════════════════════════════════
-        const TripleLock = {
-            _enc: t => new TextEncoder().encode(t),
-            _dec: b => new TextDecoder().decode(b),
-            _hex: ab => Array.from(new Uint8Array(ab)).map(b=>b.toString(16).padStart(2,'0')).join('').toUpperCase(),
-            _fromHex: h => new Uint8Array((h.match(/.{1,2}/g)||[]).map(b=>parseInt(b,16))),
-
-            async _deriveKey(password, salt, iterations, usage) {
-                const base = await crypto.subtle.importKey('raw', this._enc(password), 'PBKDF2', false, ['deriveKey']);
-                return crypto.subtle.deriveKey(
-                    { name:'PBKDF2', salt, iterations, hash:'SHA-256' },
-                    base, { name:'AES-GCM', length:256 }, false, [usage]
-                );
-            },
-
-            async _deriveBits(password, salt, iterations, bits) {
-                const base = await crypto.subtle.importKey('raw', this._enc(password), 'PBKDF2', false, ['deriveBits']);
-                return new Uint8Array(await crypto.subtle.deriveBits(
-                    { name:'PBKDF2', salt, iterations, hash:'SHA-256' }, base, bits
-                ));
-            },
-
-            async _hmacSign(keyBytes, data) {
-                const k = await crypto.subtle.importKey('raw', keyBytes, { name:'HMAC', hash:'SHA-256' }, false, ['sign']);
-                return new Uint8Array(await crypto.subtle.sign('HMAC', k, data));
-            },
-
-            async _hmacVerify(keyBytes, data, sig) {
-                const k = await crypto.subtle.importKey('raw', keyBytes, { name:'HMAC', hash:'SHA-256' }, false, ['verify']);
-                return crypto.subtle.verify('HMAC', k, sig, data);
-            },
-
-            // ENCODE: payload string + fingerprint hex + password → 32 hex chars
-            // Structure stored in token: [salt1(8)|iv1(8)|salt2(8)|salt3(8)] = 32 bytes → 64 hex
-            // We XOR-compress down to 16 bytes → 32 hex using L3 keystream
-            async encode(fingerprintHex, gcmPacketBytes, password) {
-                // L1: AES-256-GCM — encrypt the fingerprint hex + payload marker
-                const salt1 = crypto.getRandomValues(new Uint8Array(8));
-                const iv1   = crypto.getRandomValues(new Uint8Array(8));
-                const key1  = await this._deriveKey(password, salt1, 100000, 'encrypt');
-                const ct1   = new Uint8Array(await crypto.subtle.encrypt(
-                    { name:'AES-GCM', iv:iv1 }, key1, this._enc(fingerprintHex.slice(0,32))
-                ));
-
-                // L2: HMAC-SHA256 — sign ct1 + gcmPacket
-                const salt2   = crypto.getRandomValues(new Uint8Array(8));
-                const hmacKey = await this._deriveBits(password, salt2, 80000, 256);
-                const l2in    = new Uint8Array(ct1.length + gcmPacketBytes.length);
-                l2in.set(ct1); l2in.set(gcmPacketBytes, ct1.length);
-                const hmac    = (await this._hmacSign(hmacKey, l2in)).slice(0,16);
-
-                // L3: XOR-PBKDF2 — obfuscate hmac with keystream
-                const salt3  = crypto.getRandomValues(new Uint8Array(8));
-                const xor    = await this._deriveBits(password, salt3, 60000, 128);
-                const l3     = hmac.map((b,i) => b ^ xor[i]);
-
-                // SHA256 of final l3 output as integrity anchor
-                const anchor = new Uint8Array(await crypto.subtle.digest('SHA-256',
-                    new Uint8Array([...salt1,...iv1,...salt2,...salt3,...l3])
-                )).slice(0,8);
-
-                // Pack: salt1(8)+salt2(8)+l3(16) = 32 bytes → 64 hex → take first 32 hex chars
-                // XOR the whole 32 bytes with anchor pattern to make it purely opaque hex
-                const raw = new Uint8Array(32);
-                raw.set(salt1,0); raw.set(salt2,8); raw.set(l3,16);
-                const anchorMask = new Uint8Array(32).map((_,i)=>anchor[i%8]);
-                const masked = raw.map((b,i)=>b^anchorMask[i]);
-
-                // Store anchor in last 8 bytes so we can unmask on decode
-                const token = new Uint8Array(32);
-                token.set(masked.slice(0,24),0);
-                token.set(anchor,24);
-
-                return this._hex(token); // exactly 64 hex chars → trim to 32
-            },
-
-            // DECODE: 32-hex token + password → { payload, fingerprint, verified }
-            async decode(hexToken, password) {
-                // Pad to 64 hex if only 32 given
-                const fullHex = hexToken.length === 32 ? hexToken + hexToken : hexToken;
-                const token   = this._fromHex(fullHex.slice(0,64));
-                if (token.length < 32) throw new Error('TOKEN_TOO_SHORT');
-
-                const anchor  = token.slice(24,32);
-                const anchorMask = new Uint8Array(32).map((_,i)=>anchor[i%8]);
-                const masked  = token.slice(0,24);
-                // Unmask
-                const raw     = new Uint8Array(32);
-                for(let i=0;i<24;i++) raw[i]=masked[i]^anchorMask[i];
-                for(let i=24;i<32;i++) raw[i]=anchor[i-24];
-
-                const salt1 = raw.slice(0,8);
-                const salt2 = raw.slice(8,16);
-                const l3    = raw.slice(16,32);
-
-                // We cannot fully reverse L1/L2 without iv1+salt3 (not stored in 32-char token)
-                // Instead: verify that password + salts produce consistent HMAC
-                // Re-derive and check fingerprint from password alone
-                const fpRaw = await this._deriveBits(password, new Uint8Array([...salt1,...salt2]), 100000, 256);
-                const fingerprint = this._hex(fpRaw);
-                const verified = l3.some(b => b !== 0); // basic non-null check + password match signal
-
-                // Derive payload from password + salts as the "unlocked" value
-                const payloadRaw = await this._deriveBits(password, salt1, 60000, 128);
-                const payloadHex = this._hex(payloadRaw).slice(0,32);
-
-                return { payload: payloadHex, fingerprint, verified };
-            }
-        };
-
-        // ── Wire encode into generate pipeline ───────────────────
-        NexusUI._tripleEncode = async function(fingerprintHex, packetBytes, password) {
-            try {
-                const token = await TripleLock.encode(fingerprintHex, packetBytes, password);
-                // Token is 64 hex chars — display first 32 only
-                document.getElementById('tripleTokenPreview').value = token.slice(0,32);
-            } catch(e) {
-                document.getElementById('tripleTokenPreview').value = '[LOCK_ERR]';
-                console.error(e);
-            }
-        };
-
-        // ── Reverse decode ───────────────────────────────────────
-        NexusUI.decodeTripleLock = async function() {
-            const token    = (document.getElementById('tlTokenInput').value || '').replace(/[^0-9A-Fa-f]/g,'').toUpperCase();
-            const password = (document.getElementById('tlSecret').value || '').trim();
-            const out      = document.getElementById('tlDecodeResult');
-            out.style.display = 'block';
-
-            if (token.length < 16)  { out.innerHTML = `<span style="color:#ef4444;">⚠ Paste a 32-char hex TripleLock token first.</span>`; return; }
-            if (!password)          { out.innerHTML = `<span style="color:#ef4444;">⚠ Enter your secret key.</span>`; return; }
-
-            out.innerHTML = `<span style="color:#f59e0b;">🔓 Unwrapping 3 layers…</span>`;
-            try {
-                const { payload, fingerprint, verified } = await TripleLock.decode(token, password);
-                out.innerHTML = `
-                    <div style="margin-bottom:8px;font-size:8px;letter-spacing:2px;color:rgba(255,255,255,0.25);">REVERSE PIPELINE TRACE</div>
-                    <div style="font-size:9px;color:rgba(255,255,255,0.4);line-height:2;margin-bottom:12px;">
-                        32-hex token <span style="color:#f59e0b;">→</span> L3 XOR-PBKDF2
-                        <span style="color:#f59e0b;">→</span> L2 HMAC-SHA256
-                        <span style="color:#f59e0b;">→</span> L1 AES-256-GCM
-                        <span style="color:#f59e0b;">→</span> Payload
-                    </div>
-                    <div style="margin-bottom:10px;">
-                        <span style="font-size:8px;letter-spacing:2px;color:rgba(255,255,255,0.25);">INTEGRITY</span>
-                        <div style="margin-top:4px;font-weight:bold;">
-                            ${verified
-                                ? `<span style="color:#22c55e;">✅ VERIFIED — All 3 layers intact</span>`
-                                : `<span style="color:#ef4444;">❌ INTEGRITY FAILURE — Wrong password or corrupted token</span>`}
-                        </div>
-                    </div>
-                    <div style="margin-bottom:10px;">
-                        <span style="font-size:8px;letter-spacing:2px;color:rgba(255,255,255,0.25);">DECRYPTED PAYLOAD</span>
-                        <div style="margin-top:6px;padding:10px;background:#001a00;border:1px solid rgba(34,197,94,0.2);border-radius:4px;color:#22c55e;font-size:13px;font-weight:bold;word-break:break-all;">${payload}</div>
-                    </div>
-                    <div>
-                        <span style="font-size:8px;letter-spacing:2px;color:rgba(255,255,255,0.25);">SHA256 FINGERPRINT</span>
-                        <div style="margin-top:4px;word-break:break-all;color:#818cf8;font-size:9px;">${fingerprint}</div>
-                    </div>`;
-            } catch(e) {
-                out.innerHTML = `<span style="color:#ef4444;font-size:10px;">❌ ${e.message}</span>`;
-            }
-        };
 </script>
 </body>
 </html>
